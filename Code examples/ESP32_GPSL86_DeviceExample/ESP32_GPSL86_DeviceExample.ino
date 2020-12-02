@@ -12,7 +12,7 @@ TinyGPSPlus gps;
 #define TXD2 39
 // The serial connection to the GPS device
 //SoftwareSerial ss(RXPin, TXPin);
-Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(1, PIN, NEO_GRB + NEO_KHZ800);
 
 void setup()
 {
@@ -25,8 +25,15 @@ void setup()
   Serial.println(F("by Mikal Hart"));
   Serial.println();
   pixels.begin(); // This initializes the NeoPixel library.
+  pixels.setPixelColor(0, pixels.Color(50,50,50));
+  pixels.show();
+  delay(800);
+  pixels.setPixelColor(0, pixels.Color(0,0,0));
+  pixels.show();
+  delay(200);
   pixels.setPixelColor(0, pixels.Color(125,0,0));
   pixels.show();
+  delay(200);
 }
 
 void loop()
@@ -51,12 +58,16 @@ void displayInfo()
     Serial.print(gps.location.lat(), 6);
     Serial.print(F(","));
     Serial.print(gps.location.lng(), 6);
-    pixels.setPixelColor(0, pixels.Color(0,125,0));
+    pixels.setPixelColor(0, pixels.Color(0,50,0));
     pixels.show();
+    delay(100);
   }
   else
   {
     Serial.print(F("INVALID"));
+    pixels.setPixelColor(0, pixels.Color(0,0,50));
+    pixels.show();
+    delay(100);
   }
 
   Serial.print(F("  Date/Time: "));
@@ -92,6 +103,8 @@ void displayInfo()
   {
     Serial.print(F("INVALID"));
   }
-
+  pixels.setPixelColor(0, pixels.Color(0,0,0));
+  pixels.show();
+  delay(200);
   Serial.println();
 }
